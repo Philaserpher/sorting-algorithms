@@ -37,6 +37,10 @@ def insertion_sort(bar_list):
     return bar_list
 
 
+def bubble_sort(bar_list):
+    pass
+
+
 if __name__ == '__main__':
     bar_list = generate_random_bars(NUMBER_OF_BARS)
     random.shuffle(bar_list)
