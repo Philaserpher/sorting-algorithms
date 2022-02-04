@@ -1,11 +1,12 @@
 from SortingBar import SortingBar
 import random
 import pygame
+import time
 
 BLUE = (50, 72, 168)
 RED = (168, 50, 52)
 
-NUMBER_OF_BARS = 20
+NUMBER_OF_BARS = 30
 SIZE = 1000
 WINDOW = pygame.display.set_mode((SIZE, SIZE))
 pygame.display.set_caption("Sorting algorithms")
@@ -14,8 +15,8 @@ pygame.display.set_caption("Sorting algorithms")
 def draw(window, bar_list):
     window.fill((255, 255, 255))
     for i in range(len(bar_list)):
-        pygame.draw.rect(window, BLUE,
-                         (20+i*30, 200 + (400 - bar_list[i].height),
+        pygame.draw.rect(window, bar_list[i].get_colour(),
+                         (20+i*30, 800 - bar_list[i].height,
                           bar_list[i].width, bar_list[i].height))
 
     pygame.display.update()
@@ -73,17 +74,25 @@ def insertion_sort(bar_list):
     return bar_list
 
 
-def selection_sort(bar_list):
+def selection_sort(window, bar_list):
     result = []
     while bar_list:
         lowest, lowest_key = bar_list[0], 0
 
         for i in range(len(bar_list)):
-            if bar_list[i].get_height() < lowest.get_height():
-                lowest, lowest_key = bar_list[i], i
+            bar_list[i].make_purple()
+            lowest.make_red()
 
+            if bar_list[i].get_height() < lowest.get_height():
+                lowest.make_blue()
+                lowest, lowest_key = bar_list[i], i
+            draw(window, result+bar_list)
+            bar_list[i].make_blue()
+            time.sleep(0.05)
+        lowest.make_black()
         result.append(lowest)
         bar_list.pop(lowest_key)
+        draw(window, result+bar_list)
 
     return result
 
@@ -102,9 +111,10 @@ def main(window, number_of_bars):
                 run = False
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_m:
-                    merge_sort(window, bar_list)
+                    bar_list = merge_sort(window, bar_list)
+                if event.key == pygame.K_s:
+                    bar_list = selection_sort(window, bar_list)
         draw(WINDOW, bar_list)
-    bar_list = merge_sort(bar_list)
     for i in bar_list:
         print(i.get_height())
 

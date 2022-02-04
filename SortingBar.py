@@ -1,6 +1,8 @@
 # import pygame
 BLUE = (50, 72, 168)
 RED = (168, 50, 52)
+PURPLE = (138, 43, 226)
+BLACK = (0, 0, 0)
 
 
 class SortingBar:
@@ -19,3 +21,12 @@ class SortingBar:
 
     def make_blue(self):
         self.colour = BLUE
+
+    def make_purple(self):
+        self.colour = PURPLE
+
+    def make_black(self):
+        self.colour = BLACK
+
+    def get_colour(self):
+        return(self.colour)
