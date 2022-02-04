@@ -1,10 +1,24 @@
 from SortingBar import SortingBar
 import random
+import pygame
 
 BLUE = (50, 72, 168)
 RED = (168, 50, 52)
 
 NUMBER_OF_BARS = 20
+SIZE = 1000
+WINDOW = pygame.display.set_mode((SIZE, SIZE))
+pygame.display.set_caption("Sorting algorithms")
+
+
+def draw(window, bar_list):
+    window.fill((255, 255, 255))
+    for i in range(len(bar_list)):
+        pygame.draw.rect(window, BLUE,
+                         (20+i*30, 200 + (400 - bar_list[i].height),
+                          bar_list[i].width, bar_list[i].height))
+
+    pygame.display.update()
 
 
 def generate_random_bars(length, start=None, increment=None):
@@ -21,7 +35,7 @@ def generate_random_bars(length, start=None, increment=None):
     return bar_list
 
 
-def merge_sort(bar_list):
+def merge_sort(window, bar_list):
     if len(bar_list) <= 1:
         return bar_list
 
@@ -78,9 +92,22 @@ def bubble_sort(bar_list):
     pass
 
 
-if __name__ == '__main__':
-    bar_list = generate_random_bars(NUMBER_OF_BARS)
+def main(window, number_of_bars):
+    bar_list = generate_random_bars(number_of_bars)
     random.shuffle(bar_list)
+    run = True
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_m:
+                    merge_sort(window, bar_list)
+        draw(WINDOW, bar_list)
     bar_list = merge_sort(bar_list)
     for i in bar_list:
         print(i.get_height())
+
+
+if __name__ == '__main__':
+    main(WINDOW, NUMBER_OF_BARS)
