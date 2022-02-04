@@ -37,6 +37,21 @@ def insertion_sort(bar_list):
     return bar_list
 
 
+def selection_sort(bar_list):
+    result = []
+    while bar_list:
+        lowest, lowest_key = bar_list[0], 0
+
+        for i in range(len(bar_list)):
+            if bar_list[i].get_height() < lowest.get_height():
+                lowest, lowest_key = bar_list[i], i
+
+        result.append(lowest)
+        bar_list.pop(lowest_key)
+
+    return result
+
+
 def bubble_sort(bar_list):
     pass
 
@@ -44,6 +59,6 @@ def bubble_sort(bar_list):
 if __name__ == '__main__':
     bar_list = generate_random_bars(NUMBER_OF_BARS)
     random.shuffle(bar_list)
-    bar_list = insertion_sort(bar_list)
+    bar_list = selection_sort(bar_list)
     for i in bar_list:
         print(i.get_height())
