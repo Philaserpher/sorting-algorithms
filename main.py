@@ -58,7 +58,7 @@ def merge_sort(window, bar_list):
     return final_list
 
 
-def insertion_sort(bar_list):
+def insertion_sort(window, bar_list):
     length = len(bar_list)
     for i in range(length):
         pointer = i-1
@@ -97,7 +97,11 @@ def selection_sort(window, bar_list):
     return result
 
 
-def bubble_sort(bar_list):
+def bubble_sort(window, bar_list):
+    pass
+
+
+def quick_sort(window, bar_list):
     pass
 
 
@@ -114,6 +118,10 @@ def main(window, number_of_bars):
                     bar_list = merge_sort(window, bar_list)
                 if event.key == pygame.K_s:
                     bar_list = selection_sort(window, bar_list)
+                if event.key == pygame.K_i:
+                    bar_list = insertion_sort(window, bar_list)
+                if event.key == pygame.K_q:
+                    bar_list = quick_sort(window, bar_list)
         draw(WINDOW, bar_list)
     for i in bar_list:
         print(i.get_height())
