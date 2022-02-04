@@ -4,7 +4,7 @@ import random
 BLUE = (50, 72, 168)
 RED = (168, 50, 52)
 
-NUMBER_OF_BARS = 10
+NUMBER_OF_BARS = 20
 
 
 def generate_random_bars(length, start=None, increment=None):
@@ -19,6 +19,28 @@ def generate_random_bars(length, start=None, increment=None):
         bar_list.append(SortingBar(i*increment+start, 20, i))
 
     return bar_list
+
+
+def merge_sort(bar_list):
+    if len(bar_list) <= 1:
+        return bar_list
+
+    midpoint = len(bar_list)//2
+
+    half1 = merge_sort(bar_list[:midpoint])
+    half2 = merge_sort(bar_list[midpoint:])
+    final_list = []
+    while half1 and half2:
+        if half1[0].get_height() < half2[0].get_height():
+            final_list.append(half1.pop(0))
+        else:
+            final_list.append(half2.pop(0))
+    while half1:
+        final_list.append(half1.pop(0))
+    while half2:
+        final_list.append(half2.pop(0))
+
+    return final_list
 
 
 def insertion_sort(bar_list):
@@ -59,6 +81,6 @@ def bubble_sort(bar_list):
 if __name__ == '__main__':
     bar_list = generate_random_bars(NUMBER_OF_BARS)
     random.shuffle(bar_list)
-    bar_list = selection_sort(bar_list)
+    bar_list = merge_sort(bar_list)
     for i in bar_list:
         print(i.get_height())
